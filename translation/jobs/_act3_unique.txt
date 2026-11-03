@@ -1,0 +1,704 @@
+[Sleyvas]
+Sleyvas
+[sley_1]
+Peace, peace, show no weapons... I have no wish to fight you.  I am called Sleyvas.  I placed the wall of vines upon the snaking trail of mud to herd you here, to this island.
+[sley_1_o1]
+You speak Common?
+[sley_1_o2]
+Why did you block my path?
+[sley_1_o3]
+Why did your people attack me when I entered the marsh, Sleyvas?
+[sley_2]
+No and yes - the words you hear, the words I speak - they are not the same.
+[sley_3]
+There are serpents in the marsh, the Sket'kah, that when you squeeze from them their venom, weave it into your magicks, all you speak is understood by all who hear you.
+[sley_4]
+It is a half-magic, but of great use, so I have placed it upon you.  The cries of the monsters of the marsh, the words of others of my people, both will have sense to your ears.
+[sley_4_o1]
+You have gone to some effort to speak with me.  What do you want?
+[sley_4_o2]
+Why did you block my path with the vines?
+[sley_4_o3]
+How did you know I was in the marsh?
+[sley_4_o4]
+Why did your people attack me when I entered the marsh, Sleyvas?
+[sley_4_o5]
+I see.  I had some other questions for you.
+[sley_4_o6]
+I've heard enough.  I must be on my way.
+[sley_5]
+The marsh spoke of your coming - the mudvipers, the carrion beetles, the hass-caw birds, the rostfish - all told me of you.  Your first step into the marsh rippled outwards, like a stone upon a pond.
+[sley_5_o1]
+Why did you block my path with the wall of vines?
+[sley_5_o2]
+So you've brought me here - what do you want?
+[sley_5_o3]
+Why did your people attack me when I entered the marsh, Sleyvas?
+[sley_5_o4]
+I see.  I had some other questions for you.
+[sley_5_o5]
+I've heard enough.  I must be on my way.
+[sley_6]
+Had you kept upon the road of snaking mud, you would have stumbled upon the gathered tribes of my people.  They live within the innards of one of your drowned cities.  It is no place for a warm-blood from beyond the marsh.
+[sley_6_o1]
+How did you know I was in the marsh?
+[sley_6_o2]
+Very well.  What do you want with me?
+[sley_6_o3]
+If you were trying to protect me, then why did you have your people attack me when I entered the marsh?
+[sley_6_o4]
+I see.  I had some other questions for you.
+[sley_6_o5]
+I've heard enough.  I must be on my way.
+[sley_7]
+The warriors who attacked you are not my people - once perhaps, but no longer.  I live here, in the marsh - alone, a tribe of one.
+[sley_7_o1]
+How did you know I was in the marsh?
+[sley_7_o2]
+Why did you block my path with the wall of vines?
+[sley_7_o3]
+Very well.  What do you want with me?
+[sley_7_o4]
+I see.  I had some other questions for you.
+[sley_7_o5]
+I've heard enough.  I must be on my way.
+[sley_prompt]
+More...
+[sley_end]
+End
+[sley_8]
+I have brought you here to ask -- why you have come to our lands? The Onyx Tower - is it your god?
+[sley_8_o1]
+No... what is this tower you speak of?
+[sley_9]
+The Onyx Tower, whose surface glitters like oil upon the water. It arrives in our homeland, quick, sudden, and stabs into the heart of the marsh like a poisoned spear.
+[sley_10]
+All the tribes have raised their spears to it, their hissing has become low and weak, that of slaves. The Tower has devoured the hearts of my people... all except Sleyvas.
+[sley_10_o1]
+You say this Tower came to the marsh? How?
+[sley_10_o2]
+Sleyvas - maybe we can help each other. I need to stop the lizard men and get inside this tower you speak of.
+[sley_10_o3]
+I see. I had some other questions for you.
+[sley_10_o4]
+I've heard enough. I must be on my way.
+[sley_11]
+I do not know, darkness falls, then rises, leaves the Tower behind, like a weapon dropped on a field of battle. Tower smells of firepits and cities, things not of the marsh. Not even the moonlight will touch it, for the Tower drinks its light. It is a black kiss, a serpent's bite on the land.
+[sley_11_o1]
+So it just appeared one day - what lies in this tower?
+[sley_11_o2]
+Sleyvas - maybe we can help each other. I need to stop the lizard men and get inside this tower you speak of.
+[sley_11_o3]
+I see. I had some other questions for you.
+[sley_11_o4]
+I've heard enough. I must be on my way.
+[sley_12]
+Within the Tower is a spider of doors, bones, death. The spider wears the snakeskin of a female, a hu-man. She has great power, terrible anger... yet she is bones and hate only, with no blood body. She rose from the marsh after dying beneath its waters.
+[sley_12_o1]
+What does she want with your people?
+[sley_12_o2]
+Why do you say she's a spider of doors?
+[sley_12_o3]
+How come you don't serve the tower?
+[sley_12_o4]
+Sleyvas - maybe we can help each other. I need to get inside this tower you speak of and stop this woman.
+[sley_12_o5]
+I see. I had some other questions for you.
+[sley_12_o6]
+I've heard enough. I must be on my way.
+[sley_13]
+She gives them weapons of metal, so they may take cities for her. Now my people slay trees, build great wooden machines that throw spears and rock, make mud roads to onyx door in marsh - the one you walked through when you came here.
+[sley_14]
+She leads them to war, one they cannot win. She will make the sky rain with the blood of my people, turn the tribes into a feast for the vultures.
+[sley_14_o1]
+How come you don't serve the Tower?
+[sley_14_o2]
+Why did you call her a spider of doors?
+[sley_14_o3]
+Sleyvas - maybe we can help each other. I need to get inside this tower you speak of and stop this woman.
+[sley_14_o4]
+I see. I had some other questions for you.
+[sley_14_o5]
+I've heard enough. I must be on my way.
+[sley_15]
+It is what she does -- she makes onyx doors to dry places far beyond our lands, to cities and tribes of your people. That door in the innards of the hu-man shrine you stepped from is one of these doors.
+[sley_15_o1]
+What does she want with your people?
+[sley_15_o2]
+How come you don't serve the Tower?
+[sley_15_o3]
+Sleyvas - maybe we can help each other. I need to get inside this tower you speak of and stop this woman.
+[sley_15_o4]
+I see. I had some other questions for you.
+[sley_15_o5]
+I've heard enough. I must be on my way.
+[sley_16]
+Sleyvas speaks to the water, the mist - Sleyvas serve the marsh. Tower is a thing of your weak-blooded people, hu-mans, cities. It smells of fire and hate, it does not belong in our lands. Sleyvas would never raise his spear to such a thing.
+[sley_17]
+Yet this has claimed my people! My people, who need nothing of your cities! This marsh is big enough for many tribes of my people, yet the spider within the Tower wants to drive them into hu-man cities to spill hu-man blood.
+[sley_18]
+She promises gold, steel, food... but doing this will only kill my people. The dead have no use for such things.
+[sley_18_o1]
+What does she want with your people?
+[sley_18_o2]
+Why do you call her the spider of doors?
+[sley_18_o3]
+Sleyvas - maybe we can help each other. I need to get inside this tower you speak of and stop this woman.
+[sley_18_o4]
+I see. I had some other questions for you.
+[sley_18_o5]
+I've heard enough. I must be on my way.
+[sley_19]
+If you will strike the spider within the Tower, then I will give you help any way that I can. Supplies... guidance... these things I may help you with.
+[sley_20]
+If you wish to reach Tower, you must first go through the tribes of my people. Sleyvas shall ungrow the walls of vines in your path, clear the way for you. Continue along the snaking trail of mud to the drowned town of hu-mans, now the great gathering place of the tribes of the marsh. Beyond the drowned city is the Tower.
+[sley_20_o1]
+Tell me of these tribes... do they have any weaknesses?
+[sley_20_o2]
+Very well, I shall head there, then. Is there any other aid you can give me?
+[sley_21]
+The tribes are camped in the innards of the hu-man drowned city. To scatter them, you must break the spine of the tribes.
+[sley_22]
+Find our king, Sess'sth, very strong, very angry, but stupid, like big tree. He lives in great stone fort in hu-man town, find him there, kill him.
+[sley_23]
+Sess'sth's death will make the tribes scatter like quarrelsome snakes. Follow the drums - they will lead you to my people.
+[sley_23_o1]
+Very well, I shall go to this drowned city, then. Before I go, Is there any other aid you can give me?
+[sley_24]
+Once, before the Great Drowning, our land was the land of your people. Now, under the water, many things of your people can be found, things of steel and magic; Sleyvas cannot use them, does not need them.
+[sley_24_o1]
+The “Great Drowning?”
+[sley_24_o2]
+Can I see what you have?
+[sley_24_o3]
+I see. I may look through your collection later. In the meantime, can you guard me while I rest?
+[sley_24_o4]
+I had some other questions, Sleyvas.
+[sley_24_o5]
+I've heard enough. I must be on my way.
+[sley_25]
+Long ago, in the days when the sun's face was upon these lands and my people had not yet come, a king of your people, claimed this land for his own.
+[sley_25_o1]
+Tell me of this king.
+[sley_25_o2]
+Never mind, Sleyvas. Can I see what supplies you have?
+[sley_25_o3]
+Actually, forget the tale for now - can you guard me while I rest?
+[sley_25_o4]
+I had some other questions, Sleyvas.
+[sley_25_o5]
+I've heard enough. I must be on my way.
+[sley_26]
+All this king sees, he claims as his, all he can touch, he says is his - he was foolish, greedy, like most hu-mans. But one day a shaman came, sat in middle of the lands and sees not the king, hears him not. Makes king's blood burn like fire.
+[sley_26_o1]
+What did the king do?
+[sley_26_o2]
+Never mind, Sleyvas. Can I see what supplies you have?
+[sley_26_o3]
+Actually, forget the tale for now - can you guard me while I rest?
+[sley_26_o4]
+I had some other questions, Sleyvas.
+[sley_26_o5]
+I've heard enough. I must be on my way.
+[sley_27]
+The king send soldiers to make great shaman see and hear him, but the shaman turns the land against him, throws fire at warriors, turns others to rock. The shaman makes king seem like little hatchling, makes the king very angry.
+[sley_27_o1]
+What did the king do then?
+[sley_27_o2]
+Never mind, Sleyvas. Can I see what supplies you have?
+[sley_27_o3]
+Actually, forget the tale for now - can you guard me while I rest?
+[sley_27_o4]
+I had some other questions, Sleyvas.
+[sley_27_o5]
+I've heard enough. I must be on my way.
+[sley_28]
+So king finds another shaman, sends him after first to make the first one see and hear. Shamans have big battle, turn the land against each other, both shamans die. The land becomes very angry.
+[sley_28_o1]
+And when the land became angry...
+[sley_28_o2]
+Never mind, Sleyvas. Can I see what supplies you have?
+[sley_28_o3]
+Actually, forget the tale for now - can you guard me while I rest?
+[sley_28_o4]
+I had some other questions, Sleyvas.
+[sley_28_o5]
+I've heard enough. I must be on my way.
+[sley_29]
+When land became angry, water beneath earth became angry. Water rises up from Water Stair and swallows the warmblood kingdom, kill your people. It was punishment. Punishment for a king that claimed to own land. No one owns land.
+[sley_29_o1]
+What is the “Water Stair?”
+[sley_29_o2]
+Can I see what supplies you have?
+[sley_29_o3]
+I see. Can you guard me while I rest?
+[sley_29_o4]
+I had some other questions, Sleyvas.
+[sley_29_o5]
+I've heard enough. I must be on my way.
+[sley_30]
+Great break in land, water pours up through it, keeps the land beneath water, brings mists. Do not go there - very dangerous place.
+[sley_30_o1]
+Hmmm. Can I see what supplies you have?
+[sley_30_o2]
+I see. Can you guard me while I rest?
+[sley_30_o3]
+I had some other questions, Sleyvas.
+[sley_30_o4]
+I've heard enough. I must be on my way.
+[sley_31]
+Ask your questions. If I have answers, I shall trade them to you.
+[sley_31_o1]
+You speak Common well, Sleyvas. It must have been hard to learn.
+[sley_31_o2]
+How did you know I was in the marsh?
+[sley_31_o3]
+Why did you grow that wall of vines to block my path?
+[sley_31_o4]
+Tell me again about the Tower.
+[sley_31_o5]
+What was that you said before about the “Great Drowning?”
+[sley_31_o6]
+Can you do anything about those land sharks that attacked me on the way to your island?
+[sley_31_o7]
+Actually, I'd like to see what supplies you have.
+[sley_31_o8]
+Forget the questions. Can you guard me while I rest?
+[sley_31_o9]
+Never mind -- I've heard enough. I must be on my way.
+[sley_32]
+I will stand watch while your eyes are closed and the dreams come. Sleep now, Sleyvas shall watch over you.
+[sley_33]
+When the Tower comes, it strikes like dagger into ground. The wound in the earth drives the little tree-eaters to surface, like dead fish. The little ones are newly hatched... very hungry.
+[sley_33_o1]
+“Little ones?” The ones I met were huge.
+[sley_34]
+Those are the little ones only. They can eat only what they can fit into their mouths. During hatching season, that is the most dangerous time, for that is when the parents come. They eat my people, eat trees, eat islands. In the marsh, walk with your eyes open. Walk... carefully.
+[sley_34_o1]
+Sleyvas, I need some supplies. What have you got?
+[sley_34_o2]
+Before I go, I need to rest. Can you guard me while I sleep?
+[sley_34_o3]
+I had some other questions before I leave, Sleyvas.
+[sley_34_o4]
+If there are larger varieties of those beasts, I'll be sure to watch out for them. Farewell, Sleyvas.
+[sley_35]
+You are strong. Sess'sth dead, tribes without leader, their spine broken - now tribes scatter like birds. Now road to Tower is clear. But there is no gate to Tower... it is not enough to reach Tower, you must find a way inside.
+[sley_35_o1]
+How can I get into the Onyx Tower if there's no gate?
+[sley_36]
+Sleyvas know the marsh, hears its currents, the rushing water. The water comes from a holy place, a place of power, the Sinking Temple. Must cross Rotting Bog first. In Temple, maybe there is a way into the Tower -- the Water Stair.
+[sley_36_o1]
+What is the Sinking Temple?
+[sley_36_o2]
+The Rotting Bog?
+[sley_36_o3]
+Tell me about the Water Stair.
+[sley_36_o4]
+Do you have any supplies I could buy from you?
+[sley_36_o5]
+I need to rest. Can you guard me while I sleep?
+[sley_36_o6]
+Very well. I'll head to this Sinking Temple, then.
+[sley_36_o7]
+I've heard enough. I must be on my way.
+[sley_37]
+The water that fill marsh, that drown the land of hu-mans long ago, come from Sinking Temple. Dark place. Place of power. Water falls up from bottom of Earth, falls up Water Stair, turn earth to mud.
+[sley_37_o1]
+How could so much water come from there?
+[sley_37_o2]
+What's the Rotting Bog?
+[sley_37_o3]
+Do you have any supplies I could buy from you?
+[sley_37_o4]
+I need to rest. Can you guard me while I sleep?
+[sley_37_o5]
+Very well. I'll head to this Sinking Temple, then.
+[sley_37_o6]
+I've heard enough. I must be on my way.
+[sley_38]
+Water comes from second world where all is water, even air and earth is water. Through a door, the water pours up from the earth and spread across land. Drown all, hu-mans die.
+[sley_38_o1]
+Tell me about the Water Stair.
+[sley_38_o2]
+What's the Rotting Bog?
+[sley_38_o3]
+Do you have any supplies I could buy from you?
+[sley_38_o4]
+I need to rest. Can you guard me while I sleep?
+[sley_38_o5]
+Very well. I'll head to this Sinking Temple, then.
+[sley_38_o6]
+I've heard enough. I must be on my way.
+[sley_39]
+Poisoned place, sick land. Trees, fish, life die there. It has been touched by the Tower, made sick, plants sicken, die there. It pains Sleyvas to walk on dirt of Bog, can hear land suffer.
+[sley_39_o1]
+What's the Sinking Temple?
+[sley_39_o2]
+Tell me about the Water Stair.
+[sley_39_o3]
+Do you have any supplies I could buy from you?
+[sley_39_o4]
+I need to rest. Can you guard me while I sleep?
+[sley_39_o5]
+Very well. I'll head to this Sinking Temple, then.
+[sley_39_o6]
+I've heard enough. I must be on my way.
+[sley_40]
+Walk with care in Rotting Bog and in stones of Sinking Temple. Warriors of hu-man woman from Tower hunt in Temple, big half-hu-mans with horned heads, like hu-man cattle.
+[sley_40_o1]
+What's the Sinking Temple?
+[sley_40_o2]
+Tell me about the Water Stair.
+[sley_40_o3]
+Do you have any supplies I could buy from you?
+[sley_40_o4]
+I need to rest. Can you guard me while I sleep?
+[sley_40_o5]
+I've heard enough. I must be on my way.
+[sley_41]
+Have you gone to Temple? Have you walked down the Water Stair? You must do so to reach the Onyx Tower.
+[sley_41_o1]
+Tell me again of the Rotting Bog.
+[sley_41_o2]
+I'd like to know more about the Sinking Temple.
+[sley_41_o3]
+What can you tell me about the Water Stair?
+[sley_41_o4]
+I had some other questions for you.
+[sley_41_o5]
+I need some supplies first. What have you got?
+[sley_41_o6]
+Before I go, I need to rest. Can you guard me while I sleep?
+[sley_41_o7]
+I'm still trying to reach the bottom of the Water Stair, Sleyvas.
+[sley_42]
+Your strength is great, many enemies lie dead. To attack you is to die.
+[sley_43]
+This is the door to the world of water, where air, earth -- all is water. Hu-man shamans call world of water Element Plane... Plane of Water.
+[sley_43_o1]
+This leads to an elemental plane? How can this get us into the Onyx Tower?
+[sley_44]
+There is gate to Element Plane of Water in Tower - there is gate to Element Plane of Water here. You go through this gate, come out through other.
+[sley_44_o1]
+But if there's nothing but water beyond the gate, how do we breath?
+[sley_45]
+Sleyvas has magic, a magic that let you breathe like fish for short time, let you breathe water like air. Last long enough for you to enter Tower - not to get back out. You must destroy Tower from inside -- then find your own way out.
+[sley_45_o1]
+Great... sounds impossible. I better get to it.
+[sley_45_o2]
+I need some supplies first. What have you got?
+[sley_45_o3]
+Before I go, I need to rest. Can you guard me while I sleep?
+[sley_45_o4]
+I've got other business to take care of first, Sleyvas. I'll need some time before jumping through the gate.
+[sley_46]
+Listen! You will breath water for short time -- not for long! Swim fast; my magic will guide you within Element Plane, it will lead you to gate to Tower.
+[sley_46_o1]
+I hope so. I'm ready to go.
+[sley_47]
+Are you ready? The Tower waits.
+[sley_47_o1]
+It's now or never. I'm ready.
+[sley_47_o2]
+I need some supplies first. What have you got?
+[sley_47_o3]
+Before I go, I need to rest. Can you guard me while I sleep?
+[sley_47_o4]
+Not yet. I've got some other business to take care of first.
+[sley_48]
+Return soon. The Tower's shadow grows while we wait.
+[sley_48_o1]
+I'll return shortly.
+[sley_49]
+You have returned - is it help you need?
+[sley_49_o1]
+You speak Common well, Sleyvas. It must have been hard to learn.
+[sley_49_o2]
+How did you know I was in the marsh?
+[sley_49_o3]
+Why did you grow that wall of vines to block my path?
+[sley_49_o4]
+Tell me again of the Tower.
+[sley_49_o5]
+What was that you said before about the “Great Drowning?”
+[sley_49_o6]
+Can you tell me anything about those land sharks I've been running across in the marsh?
+[sley_49_o7]
+Tell me again of the Rotting Bog.
+[sley_49_o8]
+I'd like to know more about the Sinking Temple.
+[sley_49_o9]
+What can you tell me about the Water Stair?
+[sley_49_o10]
+Actually, I'd like to see what supplies you have.
+[sley_49_o11]
+Can you guard me while I rest?
+[sley_49_o12]
+Not now, Sleyvas. I'll return if I do.
+[sley_50]
+Great break in land, water pours up through it, keeps the land beneath water, brings mists. Very dangerous place.
+[sley_50_o1]
+Tell me again of the Rotting Bog.
+[sley_50_o2]
+I'd like to know more about the Sinking Temple.
+[sley_50_o3]
+Hmmm. Can I see what supplies you have?
+[sley_50_o4]
+I see. Can you guard me while I rest?
+[sley_50_o5]
+I had some other questions, Sleyvas.
+[sley_50_o6]
+Very well. I'll head to this Sinking Temple, then.
+[sley_50_o7]
+I've heard enough. I must be on my way.
+[sley_cut_1]
+He has done it. Eldrith is undone, the Tower destroyed. Now we may continue without interference, master.
+[sley_cut_2]
+She has done it. Eldrith is undone, the Tower destroyed. Now we may continue without interference, master.
+[sley_cut_3]
+They have done it. Eldrith is undone, the Tower destroyed. Now we may continue without interference, master.
+[sley_cut_4]
+It is done. Eldrith is undone, and her threat to us and our plans has been ended. And the Harper that defeated her - killed.
+[sley_cut_5]
+Now we may continue without interference, master.
+[Keledon]
+Keledon
+[keld_end]
+End
+[keld_prompt]
+More...
+[keld_1]
+Your feet - they echo upon the flagstones, your breath stirs the dust -- who are you, who walk this hall in the flesh?
+[keld_1_o1]
+Who are you?
+[keld_2]
+In life, I was Keledon, first captain of the Company of the Westering Sun. In death... I am nothing. The dead have no titles.
+[keld_2_o1]
+What is this place?
+[keld_3]
+You stand within the Hall of Remembrance. I am one of its many prisoners, all soldiers of the Westering Sun, all fallen in battle, all slain by treachery.
+[keld_4]
+Our spirits are shackled to the walls and shadows of this Tower. We are doomed to stand, to remember, and to wait for Eldrith's release... and our own.
+[keld_4_o1]
+Eldrith?
+[keld_4_o2]
+How did this come to happen?
+[keld_4_o3]
+Keledon - I have little time for this. I have to find this Eldrith... and stop her.
+[keld_5]
+This Tower, our deaths - and the doom that shall come to Baldur's Gate: These threads are all tied together, and within each strand is a betrayal. Would you hear me speak of these things? Of Eldrith?
+[keld_5_o1]
+Who is Eldrith?
+[keld_5_o2]
+I have no time for this, Keledon. I have to find this Eldrith... and stop her.
+[keld_6]
+Who is Eldrith? Much time has passed, I see, for her many names to have been ground beneath time's heel. Have you not heard of Eldrith the Betrayer, the Traitress of Swords, Eldrith of the Westering Sun? That she has been forgotten is... irony of a sort.
+[keld_6_o1]
+Go on. I would hear more about Eldrith.
+[keld_6_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_7]
+Eldrith was one of the greatest generals of the Sword Coast, commander of the Company of the Westering Sun, sworn sword and defender of Baldur's Gate.
+[keld_7_o1]
+What happened?
+[keld_7_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_8]
+She served with honor and distinction in the first and last seasons of the Sundering War, the Crescent Port siege, and finally, the campaign against the Black Horde. In all these battles, she was victorious.
+[keld_9]
+Where she led, we followed. Glory drew us, loyalty kept us, and we were proud to serve beneath her banner. Our lives were hers... and our deaths were hers.
+[keld_9_o1]
+What led to your deaths... and hers?
+[keld_9_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_10]
+I do not know when pride burrowed into her heart, but it poisoned her, and it was a poison I did not see it until it was too late. Eldrith had fought too many battles, achieved too many victories, and she had come to see the city of Baldur's Gate as her own.
+[keld_10_o1]
+What happened?
+[keld_10_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_11]
+On the day of the Great Betrayal, and the last day of the campaign against the Black Horde, I left my wife within the walls of Baldur's Gate where she would be safe, and told her I would return. She was one of the most beautiful elven maids I have ever known - there are times when I feel as if I hear her singing for me still, waiting for my return.
+[keld_11_o1]
+I think I've met your wife, Keledon - she has passed on, yet her spirit still sings for your return within Baldur's Gate.
+[keld_11_o2]
+What happened on the final day of the Great Betrayal?
+[keld_12]
+Then I fear her spirit shall never be laid to rest while I am trapped here - my wife, to think that she suffers still... and for my sake.
+[keld_12_o1]
+What happened on the final day of the Great Betrayal?
+[keld_13]
+Our company took the field against the Horde and scattered them, even though the orcs and goblins outnumbered us five to one. Still, in the rout, almost half their forces survived and fled the field. Eldrith was determined to pursue them. The Dukes of Baldur's Gate refused.
+[keld_13_o1]
+Why?
+[keld_13_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_14]
+Too many good soldiers had been lost, the Dukes told us. They - and the people - wanted no more of blood and death, and they felt the Horde would not return.
+[keld_14_o1]
+What did Eldrith do?
+[keld_14_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_15]
+Eldrith was furious. Even though we had lost many men, she felt it was better we deal a deathblow to the Horde and ensure they never threatened Baldur's Gate again. And so she defied the Dukes, and led us to our deaths.
+[keld_16]
+Already weakened, we chanced upon one of the straggling bands of the Horde and cornered them within the Dosias Cleft - it was tactical brilliance in trapping them within the canyon, but in doing so, we gave them no choice but to fight us.
+[keld_17]
+Backed into a corner, the Horde proved more vicious than we had anticipated. Eldrith, fearing of losing the field, sent a messenger back to Baldur's Gate for reinforcements before the Horde broke free of her trap.
+[keld_17_o1]
+What happened with the reinforcements?
+[keld_17_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_18]
+The reinforcements never came, and the Horde overran us. Eldrith survived. I survived... many of the Company of the Westering Sun did not. Now there are many graves within the Dosias Cleft, and much of the ground there is strewn with bones of our soldiers, mixed with the orcs and goblinoids.
+[keld_19]
+Eldrith became a thing, a creature consumed by fury. Wounded, she returned to Baldur's Gate to demand an audience with the Dukes. Instead, she was met at the gates and told that for her disobedience upon the battlefield, the walls of Baldur's Gate would be forever closed to her and the Westering Sun.
+[keld_19_o1]
+What happened then?
+[keld_19_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_20]
+Eldrith... she gathered us, all of us who remained, all of us who had sworn to serve her, and she ordered our broken company to attack the walls of her city... she swore she would take it from the Dukes, make it hers, and put the Dukes to the sword. It would be justice, she said. Justice. It was suicide.
+[keld_21]
+We were slain almost to the man, and we were driven from the city, hounded by the remaining troops of Baldur's Gate. We knew no rest, no peace, and they pursued us for leagues upon leagues, all the way to the Marsh of Chelimber. They feared Eldrith's wrath so greatly that they were determined that she should not escape alive.
+[keld_22]
+I died here in the Marsh of Chelimber, and so did all that remained of the Company of the Westering Sun. Eldrith was the last to die, brought low by crossbowmen and archers, men who feared to come within reach of her sword.
+[keld_22_o1]
+Yet she still lives... how?
+[keld_22_o2]
+Keledon, I don't have time for tales - I need to reach Eldrith and stop her before she causes any more harm.
+[keld_23]
+Even against death, Eldrith's fury prevailed. Now she lives again, a creature of terrible power and terrible anger. In her eyes she sees nothing but Baldur's Gate in flames.
+[keld_23_o1]
+Keledon, I need to know how to reach Eldrith and stop her before she causes any more harm.
+[keld_24]
+You will find her at the top of this Tower, at her watch, waiting for battle. She knows you are here, and she has attempted to seal you within this hall, as the stones of the Onyx Tower obey her will.
+[keld_25]
+But even as she is the mistress of the Tower, our spirits are part of the Tower as well. I shall allow the stones of this hall to part, so that you may reach her, and I pray, kill her for the last time.
+[keld_25_o1]
+There may still be some chance to reason with her - we shall see.
+[keld_25_o2]
+I shall go to meet her, then. I shall see to it you and your soldiers are freed, Keledon.
+[keld_26]
+She is past the point of reason - she has become a creature of vengeance, and battle is all she understands now. Even in life, she was prideful and stubborn - now vengeance has made her heart a stone.
+[keld_26_o1]
+I shall go to meet her, then. I shall see to it you and your soldiers are freed, Keledon.
+[keld_27]
+I pray the Gods favor you. If not, then I fear no one shall be able to stop her.
+[keld_27_o1]
+If I defeat Eldrith, however, the Tower will still be sealed - how can I escape?
+[keld_27_o2]
+Does Eldrith have any weaknesses that you know of?
+[keld_27_o3]
+I shall go to face her, then. Farewell, Keledon.
+[keld_28]
+Eldrith's will is tied to the Tower - surely you know that when she is slain, this Tower will die as well? It will fall into the Elemental Plane of Fire and be consumed. You cannot escape this Tower while she lives - and not after she is dead. Can you not use the way you entered to escape?
+[keld_28_o1]
+No, entering the Tower was a one-way trip -- are you sure there's no other way out?
+[keld_29]
+The Tower itself touches many places, other planes of existence, even creates gates to them. Perhaps there is some manner by which these gates may be used to escape... but I do not know.
+[keld_29_o1]
+Does Eldrith have any weaknesses that you know of?
+[keld_29_o2]
+I shall go to face her, then. Farewell, Keledon.
+[keld_30]
+She is a creature of death now. Great powers are hers to command. If you go to face her, then you must be ready in both mind and body. Take your greatest weapons, arm your mightiest spells - that is all the advice I can offer you.
+[keld_31]
+Be careful should you choose to lock steel with her. Eldrith was one of the greatest swordsmen ever known, and hers is a murderous will - be careful you do not approach within striking distance of her blade, or the battle shall be over for you.
+[keld_32]
+Still... Eldrith has given much of her self and her spirit to this Tower so she could command it. Perhaps you may find strength to defeat her by turning this link against her.
+[keld_33]
+If this Tower is linked to her, then a blade forged from the walls of this tower and constructed on the Black Forge may be your greatest weapon.
+[keld_33_o1]
+If I defeat Eldrith, the Tower will still be sealed - how can I escape?
+[keld_33_o2]
+Is there any other way you can help me, Keledon?
+[keld_33_o3]
+I shall go to face her, then. Farewell, Keledon.
+[keld_34]
+I wish that we could, but we are trapped here in this hall and cannot leave. We will pray for you, stranger, as we pray for all Baldur's Gate. May the Gods watch over you.
+[keld_34_o1]
+Keledon, can you guard me while I rest?
+[keld_34_o2]
+Tell me again of what happened on the day of the Great Betrayal.
+[keld_34_o3]
+Where can we find Eldrith?
+[keld_34_o4]
+If I defeat Eldrith, Keledon, the Tower will still be sealed - how can I escape?
+[keld_34_o5]
+Does Eldrith have any weaknesses that you know of?
+[keld_34_o6]
+I shall go to face her, then. Farewell, Keledon.
+[keld_35]
+Our spirits will watch over you, my friend. We will shield you from her eyes, and keep you safe.
+[keld_36]
+Our spirits will watch over you, little sister. We will shield you from her eyes, and keep you safe.
+[keld_37]
+Are you prepared for your final battle? If you are in need of rest, our spirits may guard you while you gather your strength.
+[keld_37_o1]
+Yes, I need to rest.
+[keld_37_o2]
+I would hear you speak again of what happened on the day of the Great Betrayal.
+[keld_37_o3]
+Where can we find Eldrith?
+[keld_37_o4]
+If I defeat Eldrith, Keledon, the Tower will still be sealed - how can I escape?
+[keld_37_o5]
+Does Eldrith have any weaknesses that you know of?
+[keld_37_o6]
+Yes, I go now to face her, Keledon.  Pray for me.
+[LizardKing]
+Sess'sth
+[sess_1]
+You trespass! This is the land of my people -- Sess'sth rules here!
+[sess_1_o1]
+You rule here no longer, Sess'sth. I've come to stop you and the rest of the lizard man tribes.
+[sess_1_o2]
+A dead lizard man rules nothing, Sess'sth.
+[sess_2]
+I will put a spear through your heart and drink blood from your skull. Your bones I shall give to the tower.
+[sess_2_o1]
+We'll see who dies this day, Sess'sth.
+[Eldrith]
+Eldrith
+[eldr_end]
+Your reign of terror ends now.
+[eldr_prompt]
+More...
+[eldr_1]
+So, the dogs of Baldur's Gate once again hound me. And all the way to my sanctuary this time, though it lies a horizon's distance from their walls. Can it be they fear me that much? They have that much wisdom at least.
+[eldr_1_o1]
+Eldrith, your army is scattered, Baldur's Gate knows of your plans, and you have nowhere left to run. Surrender.
+[eldr_1_o2]
+We are not here to trade words with you, Eldrith. We are here to stop you.
+[eldr_2]
+“Surrender?” I, who have bested death? I have nothing to fear from you... or Baldur's Gate.
+[eldr_2_o1]
+On behalf of Baldur's Gate, I demand you surrender, Eldrith. I won't ask again.
+[eldr_2_o2]
+We are not here to trade words with you, Eldrith. We are here to stop you.
+[eldr_3]
+I served Baldur's Gate with ALL of my first life, only to be repaid with betrayal. They cost me a battle, the lives of my soldiers... and my reputation. Now, I am but a sentence or two in a sage's book, a footnote, forever a traitor.
+[eldr_4]
+Now you dare to invade my fortress, demand my surrender? No, I shall not bend my knee to you or them, ever. An eternity may die before I would even consider showing them mercy. As I died, they shall die - alone, betrayed, and forever cursed.
+[eldr_4_o1]
+If we cannot sway you from your course, then we will stop you, Eldrith.
+[eldr_5]
+Then you shall die. I command this Tower. I command all within it. All your small victories, all the damage you caused, can be undone.
+[eldr_6]
+Know that as long as I stand, the war against Baldur's Gate shall continue, and I shall be victorious. You may hold the field, dog, but the day is mine.
+[eldr_7]
+Now... let us end this.
+[eldr_8]
+And so it has come to pass that I shall die twice... and this second time shall be the last. I... The Tower will not hold. You must leave this place.
+[eldr_8_o1]
+I cannot, Eldrith. We will die together.
+[eldr_8_o2]
+I will... I shall use this gate to leave. I'm sorry it came to this, Eldrith.
+[eldr_9]
+I ask your forgiveness. I... let anger cloud my vision, I harmed those who had sworn to serve me - in all these things, great harm has been done.
+[eldr_10]
+Let Baldur's Gate have its peace. I shall not rise again to challenge it - though it will doubtless need others such as you to defend it from others that wish it harm. Now... leave me to die. This Tower shall be my tomb.
+[eldr_11]
+Baldur's Gate will have its peace. I shall not rise again to challenge it - let this Tower serve as our tomb.

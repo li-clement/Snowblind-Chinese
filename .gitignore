@@ -1,0 +1,37 @@
+# 白名单模式：默认什么都不收，只放行我们自己产出的东西。
+# 理由：这个工作区里同时躺着 2.6GB 的 ISO、原版解包树、原版备份、上百个 GB 的中间 ISO
+#       和游戏截图，黑名单只要漏一条就会把受版权保护的游戏文件推到远端。
+/*
+!/.gitignore
+!/README.md
+!/汉化进度.md
+!/汉化可行性分析报告.md
+!/tools/
+!/translation/
+
+# ---- tools/ 里不属于本项目产出的东西 ----------------------------------
+tools/__pycache__/
+tools/artifacts/
+tools/extract-xiso.zip
+tools/fontcap/__pycache__/
+# 反汇编转储是 default.xbe（游戏二进制）的派生物，可用 tools/fontcap/xr.py 重新生成
+tools/_dis_*.txt
+tools/_font_funcs.txt
+tools/fontcap/winlist
+tools/fontcap/*.png
+
+# ---- translation/ 只收我们自己写的中文资源 ----------------------------
+# 游戏原文的全量导出（En 字段就是游戏剧本）不入库，可用 tools/extract_all_uni.ps1 重新导出
+translation/all_text*.json
+translation/en_texts*.txt
+translation/gtext_uni_full.txt
+translation/translation_en.csv
+translation/translation_table.csv
+translation/jobs/en_*.txt
+translation/jobs/__pycache__/
+
+# ---- 明显不该由 git 管的 ------------------------------------------------
+.DS_Store
+*.pyc
+*.iso
+*.rar

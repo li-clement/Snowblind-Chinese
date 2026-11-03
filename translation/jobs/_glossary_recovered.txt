@@ -1,0 +1,32 @@
+统一术语�?简体中�?D&D 常用译名,翻译时必须遵�?:
+[角色/人名]
+Alyth = 阿丽�? Nebbish = 内比什; Ethon = 埃松; Xantam = 赞塔�? Ciraxis = 西拉西斯
+Eldrith = 艾尔德瑞�? Sess'sth = 塞斯�? Ilivarra = 伊莉瓦拉; Kolgrim = 科尔格里�?Torrgeir = 托尔盖尔; Brogan = 布罗�? Keissen/Keisen = 凯森; Osala = 奥萨�?Ipswitch = 伊普斯维�? Drizzt = 崔斯�? Keledon = 凯勒�? Sleyvas = 斯莱瓦斯
+Garik = 加里�? Fayed = 费德; Hoochie = 胡奇; Branoch = 布拉诺克; Bartley = 巴特�?Karne = 卡恩; Chelimber = 切林伯尔; Dumathoin = 杜玛�? Sahri = 萨赫�?Clangeddin = 克兰格丁; Otiluke = 欧提路克; Mordenkainen = 摩登凯恩
+Drizzt 双刀: Icingdeath = 冰亡(霜寒弯刀), Twinkle = 闪光(防御弯刀)
+
+[地名/组织]
+Elfsong Tavern = 精灵之歌酒馆; Onyx Tower = 黑曜石之�? Burning Eye = 燃烧之眼
+Adderspine Road = 蛇脊大道; The Marsh = 大沼�? Rotting Bog = 腐烂泥沼
+Sinking Temple = 沉没神殿; Sunken Chapel = 沉没礼拜�? Hall of Remembrance = 追忆大厅
+Eldrith's Watch = 艾尔德瑞斯之�? Black Forge = 黑熔�? Water Stair = 水之阶梯
+Mining Camp = 采矿营地; Drow Underworld = 卓尔地下世界; Snow Cave = 雪之洞窟
+Ice Cave = 冰之洞窟; Ciraxis' Lair = 西拉西斯之巢; Wind's Walk = 风之行�?Thieves' Guild = 盗贼公会; Realm of the Dead / Undead = 亡灵; The Gauntlet = 试炼�?Chelimber's Crown = 切林伯尔之冠; Chelimber's Keep = 切林伯尔要塞
+
+[种族/职业/系统词]
+Drow = 卓尔; Elf = 精灵; Dwarf = 矮人; Human = 人类; Half-Orc = 半兽�?Sorceress = 术士; Fighter = 战士; Ranger = 游侠; Arcane Archer = 奥术射手
+Health = 生命; Energy = 能量; Mana = 法力; Armor = 护甲; Damage = 伤害
+Experience = 经验; Level = 等级; Quest = 任务; Inventory = 背包
+Feat = 专长; Skill = 技�? Spell = 法术; Potion = 药水; Scroll = 卷轴
+Save Game = 存档; Load = 读取; Memory Unit = 记忆�? Hard Disk = 硬盘
+Extreme Mode = 极限模式; Stat = 属�? Constitution = 体质; Charisma = 魅力
+Wisdom = 感知; Intelligence = 智力; Dexterity = 敏捷; Strength = 力量
+Will Saving Throw = 意志豁免; Reflex Saving Throw = 反射豁免; Fortitude Saving Throw = 强韧豁免
+Armor Class = 护甲等级; Hit Points = 生命�? Damage/second = 每秒伤害
+Recall Potion = 传送药�? Rejuvenation = 活力(法药); Healing = 治疗(血�?
+
+[格式符规则]
+1. 保留全部 %d %c %f %s %c 等格式符,位置可调整到中文语序合适处
+2. 保留 {} �?~ 符号(它们是按钮图标占位符)
+3. / 表示多行文本(如奖励列�?,翻译时保�?/ 作为换行分隔
+4. %c 后常跟英文按钮名(P1/P2/Equip/Back �?,按钮名也翻译成中�?�?%c 本身保留
