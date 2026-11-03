@@ -177,12 +177,20 @@ def font_codes(per_font=False):
             off, sz = struct.unpack_from('<II', b, q + 56)
             cnt, rec = struct.unpack_from('<H', b, off)[0], struct.unpack_from('<I', b, off + 8)[0]
             rp = off + rec
-            cs = set()
-            thin = rp + cnt * 16 > len(b)
-            if not thin:
+            # 薄头条目的 +0x08 是**负偏移**（u32 回绕），rp 会跑到容器外 —— 这是设计如此，
+            # 不是缺字表。要顺指针回到 master 的记录表去查，否则会把正常的薄头报成"缺 1683 字"。
+            rp2 = (off + rec) & 0xFFFFFFFF
+            thin = rp + cnt * 16 > len(b) or rp < 0 or rp + cnt * 16 > len(b)
+            src = None
+            if rp + cnt * 16 > len(b) and rp2 + cnt * 16 <= len(b):
+                rp, thin = rp2, False
+            if rp + cnt * 16 <= len(b):
                 cs = {struct.unpack_from('<H', b, rp + j * 16)[0] for j in range(cnt)}
                 codes |= cs
-            by_font[f'{lf[4:-4]}/{nm}'] = (cs, thin, cnt)
+            else:
+                cs = set()
+                src = '薄头→master'
+            by_font[f'{lf[4:-4]}/{nm}'] = (cs, thin, cnt, src)
     return by_font if per_font else codes
 
 
@@ -194,13 +202,14 @@ def cmd_coverage():
     by = font_codes(per_font=True)
     print(f'译文用到的 CJK/全角字符 {len(need)} 种，逐字体检查（每个字体都得自己画得出中文）：')
     bad = 0
-    for f, (have, thin, cnt) in sorted(by.items()):
+    for f, (have, thin, cnt, src) in sorted(by.items()):
         m = sorted(c for c in need if ord(c) not in have)
-        note = '  ← 薄头条目，字表在 master' if thin else ''
+        note = f'  ← {src}（顺指针查 master 的字表）' if src else ''
         print(f'   {f:34s} 记录 {cnt:5d} 条  ' + ('✅ 全覆盖' if not m else f'❌ 缺 {len(m)} 字') + note)
-        bad += len(m)
+        if not src:
+            bad += len(m)
     if bad:
-        samp = sorted({c for f, (h, t, n) in by.items() for c in need if ord(c) not in h})
+        samp = sorted({c for f, (h, t, n, sc) in by.items() for c in need if ord(c) not in h})
         print('  !! 缺字形会画成空白，例:', ' '.join(f'{c}' for c in samp[:24]))
         print('     → 字表要含这些字（build_v18 现在是 zh_charset ∪ 译文用字），并确认 --map 列出了全部字体')
         return 1
