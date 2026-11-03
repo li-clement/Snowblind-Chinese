@@ -57,6 +57,11 @@ def pick_tier_masters(ents, pxof, is_thin):
     return out
 
 
+NARROW_PUNCT = {ord(c) for c in '。，、·‧･'}
+# 其余全角标点（？！：；“”（）《》「」……——）按用户要求**占整格**：前进量 = 字号，
+# 墨迹按字体自然比例放大到不超过 0.92em，并在整格里水平居中。句读类才贴墨迹紧排。
+
+
 def render_punct_placed(ch, px_h, ttf, ink_scale):
     """标点：墨迹按 PUNCT_SPEC 的比例缩小后，放进**和汉字等高（px_h）的整格画布**里，
     按 vpos 决定上下位置 —— 关键点是**结尾不裁剪**。
@@ -76,15 +81,27 @@ def render_punct_placed(ch, px_h, ttf, ink_scale):
         return None
     img = img.crop(bb)
     hf, wf, vpos = getattr(B, 'PUNCT_SPEC', {}).get(ch, (0.70, 0.70, 'bot'))
-    th = max(2, round(px_h * hf * ink_scale))
-    tw = max(1, round(px_h * wf * ink_scale))
-    sc = min(th / img.height, tw / img.width)
+    if ord(ch) in NARROW_PUNCT:
+        th = max(2, round(px_h * hf * ink_scale))
+        tw = max(1, round(px_h * wf * ink_scale))
+    else:
+        # 占整格只改「格子宽度 = 一个字号」，墨迹仍按 PUNCT_SPEC 的比例（？ 0.82x0.55、
+        # 引号 0.52x0.55、省略号 0.36x0.92），不再乘 ink_scale 二次缩小 ——
+        # 也不像上一版那样放到 0.92em，否则引号会被撑成和汉字一样大。
+        th = max(3, round(px_h * hf))
+        tw = max(2, round(px_h * wf))
+    # 一律「只缩不放」：整格类只是格子占满一个字号宽，墨迹仍服从字体自然比例，
+    # 否则 1e9 那档会把本来就小的冒号/引号重新吹满整格（上一版 : 被拉到 13 行高的教训）。
+    sc = min(th / img.height, tw / img.width, 1.0)
     nw = max(1, min(tw, round(img.width * sc)))
     nh = max(2, min(th, round(img.height * sc)))
     if (nw, nh) != img.size:
         img = img.resize((nw, nh), Image.LANCZOS)
-    canvas = Image.new('L', (max(nw, 2), px_h), 0)
+    cellw = px_h if ord(ch) not in NARROW_PUNCT else max(nw, 2)
+    canvas = Image.new('L', (cellw, px_h), 0)
     oy = px_h - nh if vpos == 'bot' else (0 if vpos == 'top' else (px_h - nh) // 2)
+    # 整角格的墨迹**靠左**、右半留白 —— 这是中文排版本来的样子；居中会让 ？！ 两边都留白，
+    # 看着像单词之间被撑开。
     canvas.paste(img, (0, oy))
     px = canvas.load()
     return [[1 if px[x, y] > 100 else 0 for x in range(canvas.size[0])]
@@ -193,7 +210,7 @@ def build_font_open(src_paths, px_h, hanzi_set, punct_set):
             # 缩小前进量既不会和邻居碰糊，又正好是原版拉丁标点的绝对宽度（4~11）。
             # 前进量跟着墨迹走（下限 PUNCT_ADV×px）：。 5→6，， 3→4，？ 8→9，… 13→14
             # 正好复现原版拉丁标点的 4~11 区间，又不会出现「前进量 < 墨迹宽」的碰字。
-            adv = max(4, round(px_h * PUNCT_ADV), w + 1)
+            adv = px_h if c not in NARROW_PUNCT else max(4, round(px_h * PUNCT_ADV), w + 1)
         recs += struct.pack('<8H', c, bx, bx + w, by, by + h, f5, adv, kern)
     offSec = REC_START + cnt * 16
     offBmp = offSec + len(f['kerning'])
