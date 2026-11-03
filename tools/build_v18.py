@@ -116,7 +116,7 @@ def build_font_open(src_paths, px_h, hanzi_set, punct_set):
     return bytes(out), atw, ath, cnt, f
 
 
-def thin_font(master_bytes, f, atw, ath):
+def thin_font(master_bytes, f, atw, ath, share_hb=False):
     """只有 头 + charmap + 位图头 的壳；三个字段留占位，装箱时再写真实负偏移
 
     ⚠️ nsect 必须写 **master 的** 而不是本字体原版的：段表(section table)是跟着 master 的
@@ -131,9 +131,18 @@ def thin_font(master_bytes, f, atw, ath):
                       nsect, REC_START, 0, offBmp)   # +8/+0xC 占位=0
     # 注意：这里刻意不校验 nsect == 本字体原版 nsect —— 原版 gamefontsmall=29、bigfont=28，
     # 薄头共享的是 master 的段表，用 29 会让 0x668E0 的段表遍历越界（未验证的假设，见笔记第二十一轮）
+    pre = master_bytes[0x14:0x214]           # 用 master 重建后的 charmap，保持与共享字表一致
+    if share_hb:
+        # 省掉自带的 0x438 位图头副本，+0x10 直接指到 master 的位图头。
+        # 依据（default.xbe 静态）：0xC9280 开头就是
+        #     mov  eax,[ebp+0x14] / test eax,eax / jne 0xc9be2(ret)
+        # 也就是**位图头级别已经有"已创建"缓存**：多个 .fnt 的 +0x10 指向同一个 hb 时，
+        # 第一个字体建纹理并置 [hb+0x14]=-1、[hb+0x10]=资源指针，后面的字体直接 ret，
+        # 既不会重复分配 pow2 纹理，也不会把 hb[8] 再加一次。
+        # ⇒ 之前"共享只省容器不省纹理"的结论是错的：那是因为薄头各带一份 hb，哨兵各不相同。
+        return hdr + pre                      # 0x214 字节
     meta = bytearray(f['meta'])
     meta[4:8] = struct.pack('<I', 0)         # 像素偏移占位（装箱时写负 delta）
-    pre = master_bytes[0x14:0x214]           # 用 master 重建后的 charmap，保持与共享字表一致
     return hdr + pre + struct.pack('<HH', atw, ath) + bytes(meta)
 
 
@@ -156,7 +165,7 @@ def build_lmp(items):
     return bytearray(hdr) + body, offs
 
 
-def patch_thin(buf, thin_off, master_off):
+def patch_thin(buf, thin_off, master_off, share_hb=False):
     """薄头三个字段 = “目标绝对偏移 - 自己基址”（32 位补码，可为负）。
        引擎 0x66890: fnt+0x08/+0x0C/+0x10 各自 += fnt_base；0xC9280: pix = hb + hb[8] + 0x400"""
     _, _, _, m_rec, m_sec, m_bmp = struct.unpack_from('<HHIIII', buf, master_off)
@@ -166,6 +175,10 @@ def patch_thin(buf, thin_off, master_off):
     # 2) kerning 段 → 主条目 kerning
     struct.pack_into('<I', buf, thin_off + 0x0C, (master_off + m_sec - thin_off) & 0xFFFFFFFF)
     # 3) 像素块：让 hb_t + hb[8] + 0x400 == 主条目像素起点
+    if share_hb:
+        # 位图头本体也共享：+0x10 指向 master 的 hb（引擎 [fnt+0x10] += fnt_base）
+        struct.pack_into('<I', buf, thin_off + 0x10, (master_off + m_bmp - thin_off) & 0xFFFFFFFF)
+        return
     hb_t = thin_off + t_bmp
     struct.pack_into('<I', buf, hb_t + 0x08,
                      (master_off + m_bmp + 0x38 - hb_t) & 0xFFFFFFFF)
@@ -200,6 +213,9 @@ def main():
     ap.add_argument('--out', default='')
     ap.add_argument('--charset', default='', help='字表文件，默认 translation/jobs/zh_charset.txt（并与译文用字取并集）')
     ap.add_argument('--dry', action='store_true')
+    ap.add_argument('--sharehb', action='store_true',
+                    help='薄头连位图头也共享（+0x10 指向 master 的 hb），纹理靠引擎自带的 '
+                         '[hb+0x14] 缓存只建一份 —— 省的是真正的大头')
     ap.add_argument('--noshare', action='store_true', help='每个字体各自一张完整图集（对照组）')
     ap.add_argument('--thin', default='', help='只有这些字体做薄头(共享)，其余各自完整图集；空=全部可共享')
     a = ap.parse_args()
@@ -312,12 +328,12 @@ def main():
         for i, (kind, key) in enumerate(role):
             if kind == 'thin':
                 mb, atw, ath, cnt, f = masters[key]
-                items[i] = (items[i][0], thin_font(mb, f, atw, ath))
+                items[i] = (items[i][0], thin_font(mb, f, atw, ath, a.sharehb))
                 thinidx.append((i, first[key]))
         buf, offs = build_lmp(items)
         # master 的绝对偏移 → 打薄头补丁
         for i, mi in thinidx:
-            patch_thin(buf, offs[i], offs[mi])
+            patch_thin(buf, offs[i], offs[mi], a.sharehb)
         # 校验
         ents2, _ = parse_lmp(bytes(buf))
         bad = []
@@ -332,7 +348,7 @@ def main():
             ok = rp + cnt * 16 <= len(buf) and dp + atw * ath <= len(buf) and dp >= 0
             if not ok:
                 bad.append(nm)
-            mdataptr[nm] = (dp, atw, ath, rp, cnt)
+            mdataptr[nm] = (dp, atw, ath, rp, cnt, hb)
         shared = [k for k, v in role if k == 'thin']
         mkey = {i: key for i, (k, key) in enumerate(role)}
         ref = {}
@@ -347,13 +363,19 @@ def main():
                 got = mdataptr[nm0][:2] + (mdataptr[nm0][3],)
                 if got != want:
                     bad.append(f'{nm0} 共享指针不匹配 got={got} want={want}')
+        # 纹理按 **唯一位图头** 计（0xC9280 的 [hb+0x14] 缓存），不是按 .fnt 条目数
         tex = 0
-        for nm, (dp, atw, ath, rp, cnt) in mdataptr.items():
-            p2 = (1 << (atw - 1).bit_length()) * (1 << (ath - 1).bit_length())
-            tex += p2
+        uniq = {}
+        for nm, (dp, atw, ath, rp, cnt, hb) in mdataptr.items():
+            uniq.setdefault(hb, (atw, ath))
+        for hb, (atw, ath) in uniq.items():
+            tex += (1 << (atw - 1).bit_length()) * (1 << (ath - 1).bit_length())
         print(f'  {cont}: {len(orig)} -> {len(buf)}  .fnt 条目={len(mdataptr)} 纹理合计={tex/1048576:.2f}MB 校验={"OK" if not bad else "FAIL " + str(bad)}')
-        for nm, (dp, atw, ath, rp, cnt) in mdataptr.items():
-            print(f'      {nm:20s} cnt={cnt:5d} atlas={atw}x{ath} pixptr=+{dp:07X} recptr=+{rp:07X}')
+        for nm, (dp, atw, ath, rp, cnt, hb) in mdataptr.items():
+            tag = '' if list(uniq).index(hb) == list(uniq).index(hb) else ''
+            first_of = [n for n, v in mdataptr.items() if v[5] == hb][0]
+            print(f'      {nm:20s} cnt={cnt:5d} atlas={atw}x{ath} pixptr=+{dp:07X} recptr=+{rp:07X} '
+                  + ('纹理=自有' if first_of == nm else f'纹理=共用←{first_of}'))
         report[cont] = (bytes(buf), tex)
         open(os.path.join(ANA, f'v18_{cont}'), 'wb').write(buf)
 
