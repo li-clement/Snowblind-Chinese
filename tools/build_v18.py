@@ -207,6 +207,17 @@ def main():
     # 字表来源：频率表只是起点，真正要保证的是「译文里出现的每个字都有字形」。
     # v14~v20 一直只用 zh_top1502.txt（频率表），实测译文用到 1687 个字而表里没有 463 个
     # （五、百、黄、红、绿、工、师、爱、热、跑、雷…），那些行会直接画成空白。
+    # 守门必须在**任何写盘之前**：v21 那次试跑只 --map 了一个字体，先写了 .lmp 再退出，
+    # 把树里其余 5 个字体打回原版（CJK 记录=0），排查时误以为构建器坏了。
+    # 回封前守住门：工作备份留在游戏树里会被 extract-xiso 一起打包。
+    # v21 第一次回封就把 19 个 .punctbak 打了进去（467 文件/2.79GB → 486 文件/2.92GB）。
+    tree = os.path.dirname(RES)
+    junk = [os.path.join(r, fn) for r, _, fs in os.walk(tree) for fn in fs
+            if fn.endswith(('.bak', '.punctbak', '.tmp')) or fn == '.DS_Store']
+    if junk:
+        sys.exit(f'!! 游戏树里有 {len(junk)} 个工作备份/垃圾文件，先移走再回封：\n   '
+                 + '\n   '.join(junk[:6]))
+
     hanzi = open(os.path.join(BASE, 'translation', 'jobs', 'zh_charset.txt'), encoding='utf-8').read()
     if a.charset:
         hanzi = open(a.charset, encoding='utf-8').read()

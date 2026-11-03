@@ -159,24 +159,31 @@ def cmd_patch_tree():
         print('  例:', ', '.join(missing[:8]))
 
 
-def font_codes():
-    """res/font.lmp + res/frontend.lmp 里所有 .fnt 字表的 code 集合（含共享薄头指向的 master）"""
-    codes = set()
-    for nm in ('res/font.lmp', 'res/frontend.lmp'):
-        p = os.path.join(TREE, nm)   # open() 不需要 glob.escape
-        b = open(p, 'rb').read()
+def font_codes(per_font=False):
+    """res/font.lmp + res/frontend.lmp 里每个 .fnt 条目的 code 集合
+
+    ⚠️ 必须逐字体看：并集会把「只有 gamefonta 有中文、其余五个还是原版 141 条 Latin」这种
+       半成品构建完全掩盖掉（v21 就这么栽过一次——那次 --map 只列了一个字体）。
+       薄头条目的记录表落在容器外，会被跳过（它的字表在 master 那边）。
+    """
+    codes, by_font = set(), {}
+    for lf in ('res/font.lmp', 'res/frontend.lmp'):
+        b = open(os.path.join(TREE, lf), 'rb').read()
         for i in range(struct.unpack_from('<I', b, 0)[0]):
             q = 4 + i * 64
-            if not b[q:q + 56].split(b'\0')[0].decode('latin1', 'replace').endswith('.fnt'):
+            nm = b[q:q + 56].split(b'\0')[0].decode('latin1', 'replace')
+            if not nm.endswith('.fnt'):
                 continue
             off, sz = struct.unpack_from('<II', b, q + 56)
             cnt, rec = struct.unpack_from('<H', b, off)[0], struct.unpack_from('<I', b, off + 8)[0]
-            rp = (off + rec) & 0xFFFFFFFF
-            if rp + cnt * 16 > len(b):
-                continue
-            for j in range(cnt):
-                codes.add(struct.unpack_from('<H', b, rp + j * 16)[0])
-    return codes
+            rp = off + rec
+            cs = set()
+            thin = rp + cnt * 16 > len(b)
+            if not thin:
+                cs = {struct.unpack_from('<H', b, rp + j * 16)[0] for j in range(cnt)}
+                codes |= cs
+            by_font[f'{lf[4:-4]}/{nm}'] = (cs, thin, cnt)
+    return by_font if per_font else codes
 
 
 def cmd_coverage():
@@ -184,14 +191,20 @@ def cmd_coverage():
     for p, d in load_pairs():
         for v in d.values():
             need |= {c for c in str(v) if CJK.match(c)}
-    have = font_codes()
-    miss = sorted(c for c in need if ord(c) not in have)
-    print(f'译文用到的 CJK/全角字符 {len(need)} 种，字体里有 {len(need) - len(miss)} 种')
-    if miss:
-        print('!! 缺字形（会画成空白/豆腐）:', ' '.join(f'{c}=U+{ord(c):04X}' for c in miss))
-        print('   → 把缺的字符加进 translation/jobs/zh_punct.txt 再重跑构建')
+    by = font_codes(per_font=True)
+    print(f'译文用到的 CJK/全角字符 {len(need)} 种，逐字体检查（每个字体都得自己画得出中文）：')
+    bad = 0
+    for f, (have, thin, cnt) in sorted(by.items()):
+        m = sorted(c for c in need if ord(c) not in have)
+        note = '  ← 薄头条目，字表在 master' if thin else ''
+        print(f'   {f:34s} 记录 {cnt:5d} 条  ' + ('✅ 全覆盖' if not m else f'❌ 缺 {len(m)} 字') + note)
+        bad += len(m)
+    if bad:
+        samp = sorted({c for f, (h, t, n) in by.items() for c in need if ord(c) not in h})
+        print('  !! 缺字形会画成空白，例:', ' '.join(f'{c}' for c in samp[:24]))
+        print('     → 字表要含这些字（build_v18 现在是 zh_charset ∪ 译文用字），并确认 --map 列出了全部字体')
         return 1
-    print('全部有字形 ✅')
+    print('全部字体全覆盖 ✅')
     return 0
 
 
