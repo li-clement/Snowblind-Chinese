@@ -40,12 +40,33 @@ Xbox《博德之门：黑暗联盟》(Baldur's Gate: Dark Alliance, USA) 的汉�
 ## 构建
 
 ```bash
-# v20 px16（当前基线）：中文 16px；gamefontsmall 保持完整字表，gamefontmed/creditfont 共享图集
+# v38（当前交付）：正文/对白 14px、标题与制作人员 16px；标点分两类；共享位图头
 python3 tools/build_v18.py \
-  --thin gamefontmed.fnt,creditfont.fnt \
-  --map gamefonta.fnt=16,gamefontmed.fnt=16,gamefontsmall.fnt=16,bigfont.fnt=16,creditfont.fnt=16 \
-  --out bgda_zh_v20_px16.iso
+  --sharehb --punct-adv 0.32 --punct-scale 0.72 \
+  --thin gamefontsmall.fnt \
+  --map gamefonta.fnt=14,gamefontmed.fnt=14,gamefontsmall.fnt=14,bigfont.fnt=16,creditfont.fnt=16 \
+  --out bgda_zh_v38_punctfull.iso
 ```
+
+**两条硬上限，违反就是黑屏/卡死，别试：**
+
+1. **单次纹理分配 ≤512KB** ⇒ 每张图集 `pow2(atw)×pow2(ath) ≤ 1024×512`，即图集高 ≤512 行。
+   1825 字（1687 用字 + 138 拉丁）在 px17 就到 519 行 → 掉进 1MB 档 → 开机纯黑，**px16 是数学上限**。
+2. **字体纹理总额 ≤1.5MB** ⇒ 512KB/张就是**最多 3 个图集层**（同容器内同 px 的字体算一层，
+   `--thin` 只决定谁当 master）。v31 用 4 层 2.0MB → 开机纯黑；v16/v20/v38 都是 1.5MB → 存活。
+   用完不会报任何错：`0xC9310` 是分配失败无限重试，开机用完=黑屏，走到对话才用完=画面定住按键无效。
+
+其余开关：`--noshare`（每字体各自图集，对照组）、`--charset FILE`、`--punct-adv/--punct-scale`、
+`--keepjp`、`--dry`。脚本会模拟 `0x66890`/`0xC9280` 的指针换算并断言薄头与 master 的
+`recptr`/`pixptr` 一致，装箱阶段就能挡住算错偏移。
+
+**字号/标点别靠开机调**（一轮 3 分钟还占用模拟器），用离线预览：
+
+```bash
+python3 tools/fontcap/preview_line.py '确实很美……但这歌声是从哪儿传来的？' gamefonta.fnt 4
+```
+
+它直接读构建出的图集像素 + 记录表，按引擎的前进量与「rect 顶边对齐行首」规则排版，1 秒出图。
 
 `build_v18.py` 的其它开关：`--noshare`（每个字体各自完整图集，对照组）、`--keepjp`（保留原版日文字体）、
 `--dry`（只算体积不写盘）。脚本会模拟引擎 `0x66890`/`0xC9280` 的指针换算并断言薄头与 master 的
