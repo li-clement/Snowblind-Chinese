@@ -18,6 +18,7 @@
 """
 import argparse, os, struct, subprocess, sys
 import glob
+from PIL import Image, ImageDraw, ImageFont
 
 BASE = '/Users/lee/code/iso'
 RES = os.path.join(BASE, "[XBOX].Baldur's.Gate.Dark.Alliance.[USA]", 'res')
@@ -38,6 +39,52 @@ def parse_lmp(b):
         out.append([b[p:p + 56].split(b'\x00', 1)[0].decode('latin1'),
                     *struct.unpack_from('<II', b, p + 56)])
     return out, c
+
+
+def pick_tier_masters(ents, pxof, is_thin):
+    """预分组：每个 (容器, px) 层挑一个 master。
+        优先挑 --thin 名单外的（那是用户指定要完整的），全在名单里就晋升层内第一个。
+        这样 --thin 退化成「谁优先当 master」的偏好，不再因为容器内出现顺序
+        而把还没有 master 的薄头送进 sys.exit。"""
+    tiers = {}
+    for nm, _off, _size in ents:
+         if nm in pxof:
+             tiers.setdefault(pxof[nm], []).append(nm)
+    out = {}
+    for px, names in tiers.items():
+         pref = [n for n in names if not is_thin(n)]
+         out[px] = pref[0] if pref else names[0]
+    return out
+
+
+def render_em_natural(ch, px_h, ttf):
+    """汉字按**字号本身**渲染，不再"撑满格子"。
+
+    build_v16b.render_em 用 sc = min((px_h-1)/h, (px_h-1)/w, 1) 把字形放大到填满格子，
+    横画类的字（一、乙、丨）会被拉成一整条与字身等宽的粗杠，句号之类小字也被吹大，
+    这正是用户反馈「『一』和句号都很大」的根因。
+    这里改成：在 4 倍超采样下按 px_h 字号画，再等比缩回 1/4，**只缩不放**——
+    墨迹大小完全服从字体设计的自然比例（一 ≈ 0.85em 宽 / 2px 厚，。 ≈ 0.3em）。
+    """
+    S = 4
+    fnt = ImageFont.truetype(ttf, px_h * S)
+    asc, desc = fnt.getmetrics()
+    img = Image.new('L', (px_h * S * 3, (asc + desc) * 3), 0)
+    ImageDraw.Draw(img).text((S * 4, S * 4), ch, font=fnt, fill=255)
+    bb = img.getbbox()
+    if not bb:
+        return None
+    img = img.crop(bb)
+    nw = max(1, min(px_h, round(img.width / S)))
+    nh = max(1, min(px_h, round(img.height / S)))
+    if (nw, nh) != img.size:
+        img = img.resize((nw, nh), Image.LANCZOS)
+    px = img.load()
+    return [[1 if px[x, y] > 100 else 0 for x in range(nw)] for y in range(nh)]
+
+
+PUNCT_ADV = 0.50      # 全角标点的前进量 = px_h × 此系数（原版 5 个字体实测标点前进 4~11，比字母还窄）
+PUNCT_SCALE = 0.82    # 全角标点的墨迹按 px_h × 此系数渲染（中日排版惯例：标点画在米字格里偏小）
 
 
 def build_font_open(src_paths, px_h, hanzi_set, punct_set):
@@ -78,18 +125,19 @@ def build_font_open(src_paths, px_h, hanzi_set, punct_set):
             break
         if ord(ch) in latin_codes:
             continue
-        g = B.render_em(ch, px_h, B.TTF)
+        g = render_em_natural(ch, px_h, B.TTF)
         if g:
             entries.append((ord(ch), g))
             added += 1
     for ch in punct_set:
         if ord(ch) in latin_codes or any(e == ord(ch) for e, _ in entries):
             continue
-        g = B.render_punct(ch, px_h, B.TTF)
+        g = B.render_punct(ch, max(6, round(px_h * PUNCT_SCALE)), B.TTF)
         if g:
             entries.append((ord(ch), g))
     placed, atw, ath, atlas = B.pack_rows(entries, 1024)
     cnt = len(placed)
+    punct_codes = {ord(c) for c in punct_set}
     recs = bytearray()
     for c, box in placed:
         o = latinmap.get(c)
@@ -99,6 +147,14 @@ def build_font_open(src_paths, px_h, hanzi_set, punct_set):
             continue
         bx, by, w, h = box
         f5, adv, kern = (o[5], o[6], o[7]) if o else (6, w + 1, 0xFFFF)
+        if 0x2E80 <= c and c not in punct_codes:
+            adv = px_h          # 汉字一律整宽步进：字距均匀
+        elif c in punct_codes:
+            # 全角字形 + 半宽前进量：，。！？的墨迹本来就缩在左半格，
+            # 缩小前进量既不会和邻居碰糊，又正好是原版拉丁标点的绝对宽度（4~11）。
+            # 前进量跟着墨迹走（下限 PUNCT_ADV×px）：。 5→6，， 3→4，？ 8→9，… 13→14
+            # 正好复现原版拉丁标点的 4~11 区间，又不会出现「前进量 < 墨迹宽」的碰字。
+            adv = max(4, round(px_h * PUNCT_ADV), w + 1)
         recs += struct.pack('<8H', c, bx, bx + w, by, by + h, f5, adv, kern)
     offSec = REC_START + cnt * 16
     offBmp = offSec + len(f['kerning'])
@@ -213,6 +269,10 @@ def main():
     ap.add_argument('--out', default='')
     ap.add_argument('--charset', default='', help='字表文件，默认 translation/jobs/zh_charset.txt（并与译文用字取并集）')
     ap.add_argument('--dry', action='store_true')
+    ap.add_argument('--punct-adv', type=float, default=0.50,
+                    help='全角标点前进量 / 字号（默认 0.50：全角字形只占半宽，对齐原版拉丁标点）')
+    ap.add_argument('--punct-scale', type=float, default=0.82,
+                    help='全角标点墨迹渲染尺寸 / 字号（默认 0.82，标点画小一号更像中日排版）')
     ap.add_argument('--sharehb', action='store_true',
                     help='薄头连位图头也共享（+0x10 指向 master 的 hb），纹理靠引擎自带的 '
                          '[hb+0x14] 缓存只建一份 —— 省的是真正的大头')
@@ -261,6 +321,9 @@ def main():
     for nm, off, size in fe_ents:
         srcs.setdefault(nm, orig_fe[off:off + size])
 
+    global PUNCT_ADV, PUNCT_SCALE
+    PUNCT_ADV, PUNCT_SCALE = a.punct_adv, a.punct_scale
+    print(f'标点：前进量={PUNCT_ADV:.2f}×px  墨迹={PUNCT_SCALE:.2f}×px')
     masters = {}   # (container, px) -> (bytes, atw, ath, cnt, f)
     thin_set = set(x.strip() for x in a.thin.split(',') if x.strip())
     def is_thin(nm):
@@ -275,19 +338,14 @@ def main():
         return decisions[dk]
 
     def _group_key(cont, nm, px):
-        """组键规则：同容器同 px 里 **第一个完整字体** 占据 (cont,px) 当 master，
-           其后的完整字体各占 (cont,px,nm)；薄头一律指向 (cont,px)。"""
-        g = (cont, px)
-        if is_thin(nm):
-            return g
-        if g not in grp_taken:
-            grp_taken.add(g)
-            return g
-        return (cont, px, nm)
+        """组键 = (容器, px)：**同容器同 px 是一个图集层**，层里第一个被晋升为 master
+           的字体建图集，其余全部薄头共享它（见下面 tier_master 预分组）。"""
+        return (cont, px)
+
     def get_master(cont, nm, px):
         key = group_key(cont, nm, px)
-        if key not in masters and is_thin(nm):
-            sys.exit(f'!! {cont}/{nm} 想做薄头，但同容器内 px={px} 还没有完整字体当 master')
+        # 每个 (容器, px) 层必定有 pick_tier_masters 晋升出的 master（全在 --thin 名单里
+        # 就晋升层内第一个），所以这里不再需要「没有 master 就退出」的守卫。
         if key not in masters:
             print(f'  渲染 master [{cont}] {nm} px={px} ...')
             order = [nm] + [x for x in ('gamefonta.fnt', 'gamefontmed.fnt', 'gamefontsmall.fnt',
@@ -308,19 +366,21 @@ def main():
     for cont, ents, orig in (('font.lmp', fents, orig_font), ('frontend.lmp', fe_ents, orig_fe)):
         items, role = [], []          # role: 'master'/'thin'/'orig'
         first = {}
+        tier_master = pick_tier_masters(ents, pxof, is_thin)
         for nm, off, size in ents:
             if a.dropjp and nm.startswith('japfont'):
                 role.append(('drop', None)); continue
             if nm in pxof:
                 px = pxof[nm]
                 key = group_key(cont, nm, px)
-                if key not in masters:
-                    get_master(cont, nm, px)
-                mb = masters[key][0]
-                if key in first and is_thin(nm):
-                    role.append(('thin', key)); items.append((nm, b''))   # 占位，稍后填
+                if nm == tier_master[px] and key not in first:
+                    if key not in masters:
+                        get_master(cont, nm, px)
+                    first[key] = len(items); role.append(('master', key)); items.append((nm, masters[key][0]))
                 else:
-                    first[key] = len(items); role.append(('master', key)); items.append((nm, mb))
+                    if key not in masters:
+                        get_master(cont, tier_master[px], px)
+                    role.append(('thin', key)); items.append((nm, b''))   # 占位，稍后填
             else:
                 role.append(('orig', None)); items.append((nm, srcs[nm]))
         # 填薄头
