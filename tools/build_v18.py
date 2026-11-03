@@ -57,6 +57,40 @@ def pick_tier_masters(ents, pxof, is_thin):
     return out
 
 
+def render_punct_placed(ch, px_h, ttf, ink_scale):
+    """标点：墨迹按 PUNCT_SPEC 的比例缩小后，放进**和汉字等高（px_h）的整格画布**里，
+    按 vpos 决定上下位置 —— 关键点是**结尾不裁剪**。
+
+    引擎把每条记录的 rect 顶边对齐到行首（汉字墨迹≈整格所以看不出），
+    而 build_v16b.render_em 会把画布裁到墨迹外接框；一旦裁掉，「。，、应该坐底」这件事
+    就随空白一起被裁掉了 —— 表现正是用户反馈的「句号逗号都占在上角」。
+    留整格高度、只让宽度贴墨迹，既保住上下位置，前进量也还是紧的。
+    """
+    S = 4
+    fnt = ImageFont.truetype(ttf, px_h * S)
+    asc, desc = fnt.getmetrics()
+    img = Image.new('L', (px_h * S * 3, (asc + desc) * 3), 0)
+    ImageDraw.Draw(img).text((S * 4, S * 4), ch, font=fnt, fill=255)
+    bb = img.getbbox()
+    if not bb:
+        return None
+    img = img.crop(bb)
+    hf, wf, vpos = getattr(B, 'PUNCT_SPEC', {}).get(ch, (0.70, 0.70, 'bot'))
+    th = max(2, round(px_h * hf * ink_scale))
+    tw = max(1, round(px_h * wf * ink_scale))
+    sc = min(th / img.height, tw / img.width)
+    nw = max(1, min(tw, round(img.width * sc)))
+    nh = max(2, min(th, round(img.height * sc)))
+    if (nw, nh) != img.size:
+        img = img.resize((nw, nh), Image.LANCZOS)
+    canvas = Image.new('L', (max(nw, 2), px_h), 0)
+    oy = px_h - nh if vpos == 'bot' else (0 if vpos == 'top' else (px_h - nh) // 2)
+    canvas.paste(img, (0, oy))
+    px = canvas.load()
+    return [[1 if px[x, y] > 100 else 0 for x in range(canvas.size[0])]
+            for y in range(canvas.size[1])]
+
+
 def render_em_natural(ch, px_h, ttf):
     """汉字按**字号本身**渲染，不再"撑满格子"。
 
@@ -120,19 +154,24 @@ def build_font_open(src_paths, px_h, hanzi_set, punct_set):
                 latinmap[c] = v
     latin_codes = set(latinmap)
     added = 0
+    punct_ords = {ord(c) for c in punct_set}
     for ch in hanzi_set:
         if added >= B.NUM_HANZI:
             break
         if ord(ch) in latin_codes:
             continue
-        g = render_em_natural(ch, px_h, B.TTF)
+        # 分派：标点在字符表里也会被当汉字走到这里（zh_charset 含 。，、），
+        # 必须按“字符”而不是按“循环”选渲染器，否则整格定位那条路永远轮不到。
+        g = (render_punct_placed(ch, px_h, B.TTF, PUNCT_SCALE)
+             if ord(ch) in punct_ords else render_em_natural(ch, px_h, B.TTF))
         if g:
             entries.append((ord(ch), g))
             added += 1
+    punct_ords = {ord(c) for c in punct_set}
     for ch in punct_set:
         if ord(ch) in latin_codes or any(e == ord(ch) for e, _ in entries):
             continue
-        g = B.render_punct(ch, max(6, round(px_h * PUNCT_SCALE)), B.TTF)
+        g = render_punct_placed(ch, px_h, B.TTF, PUNCT_SCALE)
         if g:
             entries.append((ord(ch), g))
     placed, atw, ath, atlas = B.pack_rows(entries, 1024)

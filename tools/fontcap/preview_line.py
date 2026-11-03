@@ -62,7 +62,7 @@ def render(text, want='gamefonta.fnt', scale=SCALE):
         w, h = x1 - x0 + 1, y1 - y0 + 1
         if w > 0 and h > 0:
             g = atlas.crop((x0, y0, x1 + 1, y1 + 1))
-            img.paste(g, (pen, 3 + (top - h) - (top - h) // 2 - (top - h) // 2 if False else max(0, (top - h) // 2)))
+            img.paste(g, (pen, 3))          # 引擎按 rect 顶边对齐行首，预览必须一样
         pen += a
     return img.resize((img.size[0] * scale, img.size[1] * scale), Image.NEAREST), pen - 8, want
 
