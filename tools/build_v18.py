@@ -17,6 +17,7 @@
 用法: python3 build_v18.py --map gamefonta.fnt=14,gamefontmed.fnt=13,... [--dropjp] [--out x.iso]
 """
 import argparse, os, struct, subprocess, sys
+import glob
 
 BASE = '/Users/lee/code/iso'
 RES = os.path.join(BASE, "[XBOX].Baldur's.Gate.Dark.Alliance.[USA]", 'res')
@@ -116,10 +117,20 @@ def build_font_open(src_paths, px_h, hanzi_set, punct_set):
 
 
 def thin_font(master_bytes, f, atw, ath):
-    """只有 头 + charmap + 位图头 的壳；三个字段留占位，装箱时再写真实负偏移"""
+    """只有 头 + charmap + 位图头 的壳；三个字段留占位，装箱时再写真实负偏移
+
+    ⚠️ nsect 必须写 **master 的** 而不是本字体原版的：段表(section table)是跟着 master 的
+       kerning 区一起共享的，而 8 位绘制路径 0x668E0 会按 rec 的 f7 去遍历
+       `[fnt+0x0C] + edx*2` 的段表。薄头若宣称自己的 nsect 和 master 不一致
+       （原版 gamefontsmall=29 而 bigfont=28），这段遍历就会走飞 —— 表现正是
+       「共享字体的 8 位文本画不出来」（主菜单底部 Ⓐ 提示整条消失）。
+    """
     offBmp = REC_START                       # 位图头紧跟在 头+charmap 之后
+    nsect = struct.unpack_from('<I', master_bytes, 4)[0]      # 段表跟着 master 走，nsect 必须取 master 的
     hdr = struct.pack('<HHIIII', struct.unpack_from('<H', master_bytes, 0)[0], 8,
-                      f['nsect'], REC_START, 0, offBmp)   # +8/+0xC 占位=0
+                      nsect, REC_START, 0, offBmp)   # +8/+0xC 占位=0
+    # 注意：这里刻意不校验 nsect == 本字体原版 nsect —— 原版 gamefontsmall=29、bigfont=28，
+    # 薄头共享的是 master 的段表，用 29 会让 0x668E0 的段表遍历越界（未验证的假设，见笔记第二十一轮）
     meta = bytearray(f['meta'])
     meta[4:8] = struct.pack('<I', 0)         # 像素偏移占位（装箱时写负 delta）
     pre = master_bytes[0x14:0x214]           # 用 master 重建后的 charmap，保持与共享字表一致
@@ -187,12 +198,27 @@ def main():
     ap.add_argument('--dropjp', action='store_true', default=True)
     ap.add_argument('--keepjp', dest='dropjp', action='store_false')
     ap.add_argument('--out', default='')
+    ap.add_argument('--charset', default='', help='字表文件，默认 translation/jobs/zh_charset.txt（并与译文用字取并集）')
     ap.add_argument('--dry', action='store_true')
     ap.add_argument('--noshare', action='store_true', help='每个字体各自一张完整图集（对照组）')
     ap.add_argument('--thin', default='', help='只有这些字体做薄头(共享)，其余各自完整图集；空=全部可共享')
     a = ap.parse_args()
     pxof = dict((k.strip(), int(v)) for k, v in (kv.split('=') for kv in a.map.split(',')))
-    hanzi = open(os.path.join(BASE, 'translation', 'jobs', 'zh_top1502.txt'), encoding='utf-8').read()
+    # 字表来源：频率表只是起点，真正要保证的是「译文里出现的每个字都有字形」。
+    # v14~v20 一直只用 zh_top1502.txt（频率表），实测译文用到 1687 个字而表里没有 463 个
+    # （五、百、黄、红、绿、工、师、爱、热、跑、雷…），那些行会直接画成空白。
+    hanzi = open(os.path.join(BASE, 'translation', 'jobs', 'zh_charset.txt'), encoding='utf-8').read()
+    if a.charset:
+        hanzi = open(a.charset, encoding='utf-8').read()
+    import json as _json, re as _re
+    used = set()
+    for jp in glob.glob(os.path.join(BASE, 'translation', 'zh_*.uni.json')):
+        for v in _json.load(open(jp, encoding='utf-8-sig')).values():
+            used |= {c for c in str(v) if _re.match(r'[\u3000-\u303f\u4e00-\u9fff\uff00-\uffef\u2000-\u206f]', c)}
+    extra = sorted(used - set(hanzi))
+    hanzi += ''.join(extra)
+    B.NUM_HANZI = len(hanzi)          # 关键：别让 NUM_HANZI 上限把补进来的字截掉
+    print(f'  字表：charset {len(set(hanzi))} 字（译文用字 {len(used)}，本表新增覆盖 {len(extra)}）')
     punct = open(os.path.join(BASE, 'translation', 'jobs', 'zh_punct.txt'), encoding='utf-8').read()
 
     orig_font = open(os.path.join(BACK, 'font.lmp'), 'rb').read()

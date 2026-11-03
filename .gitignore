@@ -35,3 +35,7 @@ translation/jobs/__pycache__/
 *.pyc
 *.iso
 *.rar
+
+# 就地改写前留下的临时备份：历史里有更早版本，不需要入库
+*.bak
+*.punctbak
